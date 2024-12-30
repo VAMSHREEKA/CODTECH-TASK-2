@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Quiz</title>
+    <link rel="stylesheet" href="3.css">
+    <link rel="stylesheet" href="3.js">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgb(233, 221, 221);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(https://www.freepik.com/free-vector/paper-style-dynamic-lines-background_15442020.htm#fromView=keyword&page=1&position=1&uuid=48f7225f-9a21-4b38-a91c-9736d4c9babd) ;
+    background-size: cover;
+    background-position: center;
+            border-radius: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        .question-container {
+            margin-bottom: 20px;
+        }
+
+        .question {
+            font-size: 1.5em;
+        }
+
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .options li {
+            background-color: #a4a0a0c8;
+            padding: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .options li:hover {
+            background-color: #ddd;
+        }
+
+        .button {
+            display: inline-block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+       
+        .result {
+            display: none;
+            text-align: center;
+        }
+
+        .result h2 {
+            font-size: 2em;
+        }
+
+        .result p {
+            font-size: 1.2em;
+        }
+      
+    /* General Styles */
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),url(quiz\ bg.jpg) ;
+    background-size: cover;
+    background-position: center;
+        
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+    }
+
+    .container {
+        width: 80%;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+        background-image: url(bg3.jpg);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border-radius: 10px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    .question-container {
+        margin-bottom: 20px;
+    }
+    .question {
+        font-size: 1.5em;
+    }
+
+    .options {
+        list-style-type: none;
+        padding: 0;
+    }
+
+    .options li {
+        background-color:"https://www.dreamstime.com/stock-photo-spring-nature-blossom-web-banner-header-image24752960";
+        padding: 10px;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+
+    .options li:hover {
+        background-color: #d3fed5;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-top: 20px;
+        background-color: #00d6e9;
+        color: rgb(241, 241, 241);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1.2em;
+        transition: background-color 0.3s;
+    }
+
+    .button:hover {
+        background-color: #06b300;
+    }
+
+    .result {
+        display: none;
+        text-align: center;
+    }
+
+    .result h2 {
+        font-size: 2em;
+    }
+
+    .result p {
+        font-size: 1.2em;
+    }
+</style>
+
+  
+</head>
+<body>
+
+    <div class="container">
+        <h1> GK Quiz</h1>
+        
+        <div class="quiz-container">
+            <div class="question-container">
+                <p class="question" id="question-text"></p>
+                <ul class="options" id="options-list"></ul>
+            </div>
+            <button class="button" id="next-btn">Next</button>
+        </div>
+        
+        <div class="result">
+            <h2>Quiz Complete!</h2>
+            <p id="score"></p>
+            <button class="button" onclick="restartQuiz()">Restart Quiz</button>
+        </div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: " Which country is the largest producer of coffee in the world?",
+                options: ["Colombia", "Ethiopia", "Brazil", "Vietnam"],
+                correctAnswer: "Brazil"
+            },
+            {
+                question: "What is the name of the largest volcano in the world?",
+                options: ["Mount St. Helens", "Mauna Loa", "Mount Kilimanjaro", "Mount Fuji"],
+                correctAnswer: "Mauna Loa"
+            },
+            {
+                question: "Who painted the Mona Lisa?",
+                options: ["Vincent van Gogh", "Leonardo da Vinci", "Pablo Picasso", "Michelangelo"],
+                correctAnswer: "Leonardo da Vinci"
+            },
+            {
+                question: "Which is the largest desert in the world?",
+                options: ["Sahara Desert", "Arabian Desert", "Kalahari Desert", "Antarctica"],
+                correctAnswer: "Antarctica"
+            },
+            {
+                question: "Who invented the lightbulb?",
+                options: ["Alexander Graham Bell", "Nikola Tesla", "Benjamin Franklin", "Thomas Edison"],
+                correctAnswer: "Thomas Edison"
+            },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        // Get elements
+        const questionText = document.getElementById("question-text");
+        const optionsList = document.getElementById("options-list");
+        const nextBtn = document.getElementById("next-btn");
+        const resultSection = document.querySelector(".result");
+        const scoreDisplay = document.getElementById("score");
+
+        // Display question and options
+        function loadQuestion() {
+            const currentQuestion = questions[currentQuestionIndex];
+            questionText.textContent = currentQuestion.question;
+            optionsList.innerHTML = "";
+
+            currentQuestion.options.forEach(option => {
+                const li = document.createElement("li");
+                li.textContent = option;
+                li.onclick = () => selectAnswer(option);
+                optionsList.appendChild(li);
+            });
+
+            nextBtn.style.display = "none";
+        }
+
+        // Handle answer selection
+        function selectAnswer(selectedOption) {
+            const currentQuestion = questions[currentQuestionIndex];
+            if (selectedOption === currentQuestion.correctAnswer) {
+                score++;
+            }
+            nextBtn.style.display = "block";
+        }
+
+        // Handle next button click
+        nextBtn.addEventListener("click", () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        });
+
+        // Show quiz result
+        function showResult() {
+            resultSection.style.display = "block";
+            scoreDisplay.textContent = `Congratulations You scored ${score} out of ${questions.length}.`;
+            document.querySelector(".quiz-container").style.display = "none";
+        }
+
+        // Restart the quiz
+        function restartQuiz() {
+            score = 0;
+            currentQuestionIndex = 0;
+            resultSection.style.display = "none";
+            document.querySelector(".quiz-container").style.display = "block";
+            loadQuestion();
+        }
+
+        // Initial load
+        loadQuestion();
+    </script>
+
+</body>
+</html>

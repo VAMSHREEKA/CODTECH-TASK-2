@@ -1,4 +1,4 @@
-Name: Vamshreeka p
+Name: Vamshreeka P
 
 company: CODTECH IT SOLUTIONS
 
